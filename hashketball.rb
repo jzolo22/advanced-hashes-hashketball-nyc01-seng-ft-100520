@@ -191,19 +191,6 @@ def player_stats(name)
   end
 end
 
-# def biggest_shoe_size
-#   max_shoe_size = 0
-#   game_hash.each do |location, team_info_hash|
-#     team_info_hash[:players].each do |player_hash|
-#       if player_hash[:shoe] > biggest_shoe_size
-#         binding.pry
-#         max_shoe_size = player_hash[:shoe]
-        
-#   end
-# end
-# end
-# end
-
 
 def big_shoe_rebounds
   max_shoe_size = 0
@@ -222,3 +209,101 @@ end
     end
   end
 end
+
+def most_points_scored_calculator
+  max_points = 0 
+  game_hash.each do |location, team_info_hash|
+    team_info_hash[:players].each do |player_hash|
+      if player_hash[:points] > max_points
+        max_points = player_hash[:points]
+      end
+  end
+end
+return max_points
+end
+
+def most_points_scored 
+  max_points = most_points_scored_calculator
+  game_hash.each do |location, team_info_hash|
+    team_info_hash[:players].each do |player_hash|
+      if player_hash[:points] == max_points
+        return player_hash[:player_name]
+      end
+  end
+end
+end
+
+most_points_scored
+
+def total_points_scored(team)
+  sum = 0 
+  game_hash.each do |location, team_info_hash|
+    if team_info_hash[:team_name] == team
+    team_info_hash[:players].each do |player_hash|
+      sum += player_hash[:points]
+    end
+    end
+  end
+  return sum
+end
+
+def winning_team
+  if total_points_scored("Brooklyn Nets") > total_points_scored("Charlotte Hornets")
+    return "Brooklyn Nets wins!"
+  else
+    return "Charlotte Hornets wins!"
+  end
+end
+
+def longest_name_calculator
+  max_length = 0
+  game_hash.each do |location, team_info_hash|
+    team_info_hash[:players].each do |player_hash|
+      if player_hash[:player_name].length > max_length
+        max_length = player_hash[:player_name].length 
+      end
+  end
+end
+return max_length
+end
+
+def player_with_longest_name
+  max_length = longest_name_calculator
+  game_hash.each do |location, team_info_hash|
+    team_info_hash[:players].each do |player_hash|
+      if player_hash[:player_name].length == max_length
+        return player_hash[:player_name]
+      end
+    end
+  end
+end
+
+
+def most_steals_scored_calculator
+  max_steals = 0 
+  game_hash.each do |location, team_info_hash|
+    team_info_hash[:players].each do |player_hash|
+      if player_hash[:steals] > max_steals
+        max_steals = player_hash[:steals]
+      end
+  end
+end
+return max_steals
+end
+
+def most_steals_scored 
+  max_steals = most_steals_scored_calculator
+  game_hash.each do |location, team_info_hash|
+    team_info_hash[:players].each do |player_hash|
+      if player_hash[:steals] == max_steals
+        return player_hash[:player_name]
+      end
+  end
+end
+end
+
+
+def long_name_steals_a_ton?
+  most_steals_scored == player_with_longest_name
+end
+
